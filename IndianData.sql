@@ -80,3 +80,18 @@ group by
 	l.state
 Order by 
 	total_profit desc;
+
+
+	--running total CTE
+With OrderDetailsWithTotal (Order_date, running_total) as(
+	Select
+	Order_date,
+	Sum(d.Profit) OVER (order by order_date) as running_total
+From List_of_Orders_NEW l
+Join Order_Details_new d on l.order_ID = d.order_ID)
+Select 
+	Order_date,
+	Running_total
+from orderdetailswithtotal
+
+
